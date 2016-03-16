@@ -4,6 +4,7 @@
   "description": "BAT is budget analysis tool",
   "main": "calc.js",
   "scripts": {
+    "start": "node server/server.js webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
