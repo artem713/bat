@@ -1,0 +1,7 @@
+<div class="card-list-wrap">
+    <card class="card-list-item"
+          ng-repeat="card in cardListCtrl.cards track by $index"
+          card=card>
+    </card>
+    <button ng-click="cardListCtrl.add()">ADD CARD</button>
+</div>
