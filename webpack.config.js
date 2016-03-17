@@ -4,6 +4,8 @@ module.exports = {
         path: 'builds',
         filename: 'bundle.js'
     },
+    debug: true,
+    devtool: 'source-map',
     module: {
         loaders: [
             {
