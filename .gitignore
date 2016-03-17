@@ -1,6 +1,8 @@
 node_modules
-.idea
-builds
 bower_components
+builds
+
+.idea
+.env
 *.log
 server/config.js
