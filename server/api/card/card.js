@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+    CardProduct = require('../cardProduct/cardProduct');
 
 const cardSchema = mongoose.Schema({
     title: String,
@@ -10,7 +11,7 @@ const cardSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    products: ['CardProduct']
+    products: [CardProduct.schema]
 });
 
 module.exports = mongoose.model('Card', cardSchema);

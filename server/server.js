@@ -2,6 +2,7 @@
 
 const express = require('express'),
     path = require('path'),
+    bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     config = require('./config'),
     mongo_uri = config.mongo.uri,
@@ -9,6 +10,8 @@ const express = require('express'),
     port = 9000;
 
 mongoose.connect(mongo_uri);
+
+app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, '../builds')));
 

@@ -6,8 +6,15 @@ const Card = require('./card'),
 
 module.exports = function CardController() {
     function get() {
+        return _find();
+    }
 
-        return Card.find({})
+    function getById(id) {
+        return _find({_id: id});
+    }
+
+    function _find(params) {
+        return Card.find(params || {})
             .populate({
                 path: 'products',
                 model: 'CardProduct',
@@ -17,13 +24,11 @@ module.exports = function CardController() {
                     select: 'name'
                 }
             })
-            .exec(function (err, a) {
-                console.log(a);
-                return a;
-            });
+            .exec((err, data) => data);
     }
 
     return {
-        get: get
+        get: get,
+        getById: getById
     };
 };

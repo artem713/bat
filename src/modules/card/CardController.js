@@ -37,16 +37,16 @@ export default class CardController {
 
     onKeyPress($event, productIndex) {
         if ($event.which === KEY_EVENTS[ENTER_KEY_PRESSED]) {
-            this.addProduct(productIndex + 1);
+            this.addProduct(productIndex);
             this.setFocus(productIndex + 1)
         }
     }
 
     addProduct(index) {
-        if (!this.card.id) {
-            this.$http.post(`/card/add`);
-        }
-        return this.$http.post(`/card/${this.card.id}/addProduct/${index}`).then((response) => {
+        return this.$http.post(`/card/${this.card._id}/addProduct`, {
+            position: index,
+            product: this.card.products[index]
+        }).then((response) => {
             this.card.products = response.data.products;
         });
     }

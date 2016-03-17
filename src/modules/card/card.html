@@ -9,7 +9,7 @@
             <div class="price">Price</div>
         </div>
         <div ng-repeat="item in cardCtrl.card.products">
-            <input id="{{'card-product-' + $index}}" ng-keypress="cardCtrl.onKeyPress($event, $index)" type="text" class="title" ng-model="item.name"/>
+            <input id="{{'card-product-' + $index}}" ng-keypress="cardCtrl.onKeyPress($event, $index)" type="text" class="title" ng-model="item.product.name"/>
             <input ng-keypress="cardCtrl.onKeyPress($event, $index)" type="text" class="quantaty" ng-model="item.quantity"/>
             <input ng-keypress="cardCtrl.onKeyPress($event, $index)" type="text" class="price" ng-model="item.price"/>
         </div>

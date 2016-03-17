@@ -13,11 +13,8 @@ router.route('')
                 res.send(data)
             })
             .catch(err => console.error(err.message));
-    })
-    .post((req, res) => {
-        //let cl = Array.from(cardListData);
-        //cl.push({id: 2, products: [{}]});
-        //res.send(cl);
     });
+
+router.use(require('./addProduct'));
 
 module.exports = router;
