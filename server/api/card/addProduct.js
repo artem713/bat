@@ -3,6 +3,7 @@
 const CardController = require('./card.controller')(),
     Card = require('./card'),
     Product = require('../product/product'),
+    ProductController = require('../product/product.controller')(),
     CardProduct = require('../cardProduct/cardProduct');
 
 module.exports = require('express').Router()
@@ -10,34 +11,38 @@ module.exports = require('express').Router()
         const position = req.body.position;
         const cardProduct = req.body.product;
 
-        Card.findById((req.params.cardId))
-            .exec((err, card) => {
-                if (err) {
-                    console.log(err);
-                }
-                return card;
-            })
+        CardController.getById(req.params.cardId)
             .then(card => {
                 var doc = card.products.id(cardProduct._id);
                 if (doc) {
                     doc.price = cardProduct.price;
                     doc.quantity = cardProduct.quantity;
+                    if (!doc.product) {
+                        return ProductController.getProductIdByName(cardProduct.product.name)
+                            .then(productId => {
+                                if (productId) {
+                                    doc.product = new mongoose.Types.ObjectId(productId);
+                                } else {
+                                    let newProduct = new Product({name: cardProduct.product.name});
+                                    return newProduct.save().then(pr => {
+                                        doc.product = pr;
+                                        doc.save();
+                                    });
+                                }
+                                return doc.save();
+                            })
+                            .then(() => card.save());
+                    }
                     return card.save();
                 } else {
-                    return Product.findOne({name: cardProduct.product.name})
-                        .then((err, pr) => {
-                            if (err) {
-                                console.log('Error while finding product:', err);
-                            }
-                            return pr;
-                        })
-                        .then(pr => {
-                            let cp = new CardProduct({
-                                product: pr._id,
+                    return ProductController.getProductIdByName(cardProduct.product.name)
+                        .then(productId => {
+                            let newCardProduct = new CardProduct({
+                                product: productId._id,
                                 price: cardProduct.price,
                                 quantity: cardProduct.quantity
                             });
-                            card.products.splice(position, 0, cp);
+                            card.products.splice(position, 0, newCardProduct);
                             return card.save();
                         });
                 }
@@ -46,17 +51,6 @@ module.exports = require('express').Router()
                 card.products.splice(position + 1, 0, new CardProduct());
                 return card.save();
             })
-            .then(card => {
-                return Card.findById((req.params.cardId)).populate({
-                        path: 'products',
-                        model: 'CardProduct',
-                        populate: {
-                            path: 'product',
-                            model: 'Product',
-                            select: 'name'
-                        }
-                    })
-                    .exec((err, data) => data);
-            })
+            .then(() => CardController.getById(req.params.cardId, true))
             .then(card => res.send({products: card.products}));
     });
