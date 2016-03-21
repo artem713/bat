@@ -1,21 +1,30 @@
 <div class="card-wrap">
     <div class="card-header">
-        <input type="text" class="title" ng-model="cardCtrl.title"/>
+        <input type="text"
+               placeholder="Enter shop name..."
+               focus-if="cardCtrl.card.isNew"
+               class="title"
+               ng-model="cardCtrl.card.title"
+               ng-keypress="cardCtrl.saveCard($event, $index)"/>
     </div>
     <div class="card-products">
-        <div class="card-products__header">
+        <div class="card-products__header" ng-if="cardCtrl.card.products.length">
             <div class="title">Title</div>
             <div class="quantaty">Quantaty</div>
             <div class="price">Price</div>
         </div>
         <div ng-repeat="item in cardCtrl.card.products">
-            <input id="{{'card-product-' + $index}}" ng-keypress="cardCtrl.onKeyPress($event, $index)" type="text" class="title" ng-model="item.product.name"/>
+            <input id="{{'card-product-' + item._id}}"
+                   ng-keypress="cardCtrl.onKeyPress($event, $index)"
+                   type="text"
+                   class="title"
+                   ng-model="item.product.name"/>
             <input ng-keypress="cardCtrl.onKeyPress($event, $index)" type="text" class="quantaty" ng-model="item.quantity"/>
             <input ng-keypress="cardCtrl.onKeyPress($event, $index)" type="text" class="price" ng-model="item.price"/>
         </div>
     </div>
     <div class="card-footer">
-        <div class="card-total">
+        <div class="card-total" ng-if="cardCtrl.card.products.length">
             <span class="card-total__title">Total</span>
             <span class="card-total__value">{{cardCtrl.getTotalPrice()}}</span>
         </div>

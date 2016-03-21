@@ -38,8 +38,15 @@ module.exports = function CardController() {
         });
     }
 
+    function add(title) {
+        const card = new Card({title: title});
+        card.products.push(new CardProduct());
+        return card.save();
+    }
+
     return {
         get: get,
-        getById: getById
+        getById: getById,
+        add: add
     };
 };

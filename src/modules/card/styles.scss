@@ -2,23 +2,31 @@
   margin: 10px;
 }
 
-@mixin cardProductItem {
-  float: left;
-  box-sizing: border-box;
-  border-right: 1px dashed gray;
+@mixin bottomBorder {
   border-bottom: 1px dashed gray;
-  border-top: transparent;
-  border-left: transparent;
-  background: transparent;
-  padding: 5px;
 }
 
-@mixin cardProductItemFocused {
+@mixin disableBackground {
+  background: transparent;
+}
+
+@mixin cardProductItem {
+  float: left;
+  padding: 5px;
+  box-sizing: border-box;
+  border-top: transparent;
+  border-left: transparent;
+  border-right: 1px dashed gray;
+  @include bottomBorder;
+  @include disableBackground;
+}
+
+@mixin disableOutline {
   outline: none;
   border-bottom-style: solid;
 }
 
-@mixin cardProductsHeaderTitle {
+@mixin disableBorder {
   border: none;
 }
 
@@ -34,6 +42,17 @@
 
 .card-header {
   font-weight: bold;
+
+  .title {
+    @include disableBorder;
+    @include bottomBorder;
+    @include disableBackground;
+    width: 100%;
+
+    &:focus {
+      @include disableOutline;
+    }
+  }
 }
 
 .card-products {
@@ -46,7 +65,7 @@
     @include cardProductItem;
     width: 75%;
     &:focus {
-      @include cardProductItemFocused;
+      @include disableOutline;
     }
   }
 
@@ -55,7 +74,7 @@
     width: 10%;
     text-align: center;
     &:focus {
-      @include cardProductItemFocused;
+      @include disableOutline;
     }
   }
 
@@ -64,7 +83,7 @@
     width: 15%;
     text-align: center;
     &:focus {
-      @include cardProductItemFocused;
+      @include disableOutline;
     }
   }
 
@@ -77,16 +96,16 @@
 
     .title {
       width: 60%;
-      @include cardProductsHeaderTitle;
+      @include disableBorder;
     }
 
     .quantaty {
       width: 25%;
-      @include cardProductsHeaderTitle;
+      @include disableBorder;
     }
 
     .price {
-      @include cardProductsHeaderTitle;
+      @include disableBorder;
     }
   }
 }

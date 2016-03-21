@@ -4,6 +4,7 @@ module.exports = {
         path: 'builds',
         filename: 'bundle.js'
     },
+    watch: true,
     debug: true,
     devtool: 'source-map',
     module: {

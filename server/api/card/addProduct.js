@@ -5,7 +5,8 @@ const CardController = require('./card.controller')(),
     CardProduct = require('../cardProduct/cardProduct'),
     Product = require('../product/product');
 
-let card = {};
+let card = {},
+    newCardProduct;
 
 module.exports = require('express').Router()
     .post('/:cardId/addProduct', addProduct);
@@ -48,8 +49,12 @@ function modifyCardProduct(data) {
 }
 
 function addNewCardProduct(position) {
-    card.products.splice(position + 1, 0, new CardProduct());
-    return card.save();
+    return new CardProduct().save()
+        .then(data => {
+            newCardProduct = data;
+            card.products.splice(position + 1, 0, newCardProduct);
+        })
+        .then(() => card.save());
 }
 
 function populateCard(id) {
@@ -63,5 +68,8 @@ function setCard(data) {
 }
 
 function sendCardProducts(response, products) {
-    response.send({products: products});
+    response.send({
+        products: products,
+        newProductId: newCardProduct._id
+    });
 }

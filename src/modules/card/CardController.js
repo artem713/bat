@@ -32,13 +32,23 @@ export default class CardController {
     }
 
     getTitle() {
-        return this.card.title || this.card.date ? new Date(this.card.date).toDateString() : new Date().toDateString();
+        return this.card.title;
     }
 
     onKeyPress($event, productIndex) {
         if ($event.which === KEY_EVENTS[ENTER_KEY_PRESSED]) {
-            this.addProduct(productIndex);
-            this.setFocus(productIndex + 1)
+            this.addProduct(productIndex)
+                .then(response => this.setProductFocus(response.data.newProductId));
+        }
+    }
+
+    saveCard($event) {
+        if ($event.which === KEY_EVENTS[ENTER_KEY_PRESSED]) {
+            return this.$http.post(`/card`, {
+                title: this.card.title || new Date()
+            }).then(response => {
+                this.card = response.data;
+            });
         }
     }
 
@@ -46,14 +56,15 @@ export default class CardController {
         return this.$http.post(`/card/${this.card._id}/addProduct`, {
             position: index,
             product: this.card.products[index]
-        }).then((response) => {
+        }).then(response => {
             this.card.products = response.data.products;
+            return response;
         });
     }
 
-    setFocus(index) {
+    setProductFocus(productId) {
         this.$timeout(() => {
-            let element = this.$window.document.getElementById(`card-product-${index}`);
+            let element = this.$window.document.getElementById(`card-product-${productId}`);
             if(element) {
                 element.focus();
             }
