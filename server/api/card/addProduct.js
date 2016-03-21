@@ -5,6 +5,8 @@ const CardController = require('./card.controller')(),
     CardProduct = require('../cardProduct/cardProduct'),
     Product = require('../product/product');
 
+let card = {};
+
 module.exports = require('express').Router()
     .post('/:cardId/addProduct', addProduct);
 
@@ -13,22 +15,16 @@ function addProduct(req, res) {
     const {position, product: receivedCardProduct} = req.body;
 
     CardController.getById(req.params.cardId)
-        .then(card => {
-            const cardProduct = card.products.id(receivedCardProduct._id);
-            return modifyCardProduct(cardProduct, receivedCardProduct)
-                .then(() => {
-                    return card;
-                });
-        })
-        .then(card => {
-            card.products.splice(position + 1, 0, new CardProduct());
-            return card.save();
-        })
-        .then(() => CardController.getById(req.params.cardId, true))
-        .then(card => res.send({products: card.products}));
+        .then(card => setCard(card))
+        .then(() => modifyCardProduct(receivedCardProduct))
+        .then(() => addNewCardProduct(position))
+        .then(() => populateCard(req.params.cardId))
+        .then(() => sendCardProducts(res, card.products));
 }
 
-function modifyCardProduct(cardProduct, data) {
+function modifyCardProduct(data) {
+
+    const cardProduct = card.products.id(data._id);
 
     cardProduct.price = data.price;
     cardProduct.quantity = data.quantity;
@@ -39,16 +35,33 @@ function modifyCardProduct(cardProduct, data) {
                 if (product) {
                     cardProduct.product = product;
                     return cardProduct.save();
-                } else {
-                    return new Product({name: data.product.name})
-                        .save()
-                        .then(product => {
-                            cardProduct.product = product;
-                            return cardProduct.save();
-                        });
                 }
+                return new Product({name: data.product.name})
+                    .save()
+                    .then(product => {
+                        cardProduct.product = product;
+                        return cardProduct.save();
+                    });
+
             });
     }
-    //return q.promise;
 }
 
+function addNewCardProduct(position) {
+    card.products.splice(position + 1, 0, new CardProduct());
+    return card.save();
+}
+
+function populateCard(id) {
+    return CardController
+        .getById(id, true)
+        .then(card => setCard(card));
+}
+
+function setCard(data) {
+    card = data;
+}
+
+function sendCardProducts(response, products) {
+    response.send({products: products});
+}
