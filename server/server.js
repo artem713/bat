@@ -5,11 +5,10 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     config = require('./config'),
-    mongo_uri = config.mongo.uri,
     app = express(),
     port = 9000;
 
-mongoose.connect(mongo_uri);
+mongoose.connect(config.mongo.uri);
 
 app.use(bodyParser.json());
 

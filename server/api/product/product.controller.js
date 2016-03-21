@@ -21,11 +21,11 @@ module.exports = function ProductController() {
 
     function getProductByName(name) {
         return Product.findOne({name: name})
-            .then((err, pr) => {
+            .then(product => product)
+            .catch(err => {
                 if (err) {
                     console.log('Error while finding product:', err);
                 }
-                return pr;
             });
     }
 

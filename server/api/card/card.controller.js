@@ -14,22 +14,8 @@ const Card = require('./card'),
     };
 
 module.exports = function CardController() {
-    function get() {
-        return _find();
-    }
 
-    function getById(id, populate) {
-        let promise = Card.findById(id);
-        promise = populate ? promise.populate(populationConfig) : promise;
-        return promise.exec((err, data) => {
-            if (err) {
-                console.log(err);
-            }
-            return data;
-        });
-    }
-
-    function _find(params) {
+    function get(params) {
         return Card.find(params || {})
             .populate(populationConfig)
             .exec((err, data) => {
@@ -38,6 +24,18 @@ module.exports = function CardController() {
                 }
                 return data;
             });
+    }
+
+    function getById(id, populate) {
+        let promise = Card.findById(id);
+        promise = populate ? promise.populate(populationConfig) : promise;
+
+        return promise.exec((err, data) => {
+            if (err) {
+                console.log(err);
+            }
+            return data;
+        });
     }
 
     return {

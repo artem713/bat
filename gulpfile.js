@@ -22,6 +22,7 @@ gulp.task("webpack", function(callback) {
 
 gulp.task('server', function() {
     var serverProcess = childProcess.execFile('node', [
+        '--harmony_destructuring',
         'server/server.js'
     ]);
     serverProcess.stdout.on('data', function(data) {

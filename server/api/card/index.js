@@ -8,10 +8,7 @@ router.route('')
     .get((req, res) => {
         CardController
             .get()
-            .then(data => {
-                console.log(data);
-                res.send(data)
-            })
+            .then(data => res.send(data))
             .catch(err => console.error(err.message));
     });
 
