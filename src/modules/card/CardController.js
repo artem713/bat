@@ -12,6 +12,7 @@ export default class CardController {
     }
 
     initialize() {
+        this._timeout = null;
         this.card.actualDate = new Date(this.card.actualDate);
     }
 
@@ -52,14 +53,25 @@ export default class CardController {
     }
 
     updateCardInfo() {
+        console.log('updating card info');
         let promise = this.$http.put(`/card/${this.card._id}`, {
             title: this.card.title,
             actualDate: this.card.actualDate
         }).then(response => {
             this.card = response.data;
             this.initialize();
+            if (this._timeout) {
+                console.log('cancelling timeout');
+                this.$timeout.cancel(this._timeout);
+            }
         });
         return promise;
+    }
+
+    _deferedUpdatingCardInfo() {
+        if (!this._timeout) {
+            this._timeout = this.$timeout(() => this.updateCardInfo(), 3000);
+        }
     }
 
     addProduct(index) {
@@ -75,7 +87,7 @@ export default class CardController {
     setProductFocus(productId) {
         this.$timeout(() => {
             let element = this.$window.document.getElementById(`card-product-${productId}`);
-            if(element) {
+            if (element) {
                 element.focus();
             }
         });

@@ -9,7 +9,7 @@
         <input type="date"
                class="actual-date"
                ng-model="cardCtrl.card.actualDate"
-               ng-change="cardCtrl.updateCardInfo()"/>
+               ng-change="cardCtrl._deferedUpdatingCardInfo()"/>
     </div>
     <div class="card-products">
         <div class="card-products__header" ng-if="cardCtrl.card.products.length">
