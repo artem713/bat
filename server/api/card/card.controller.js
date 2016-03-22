@@ -38,8 +38,10 @@ module.exports = function CardController() {
         });
     }
 
-    function add(title) {
-        const card = new Card({title: title});
+    function add(title, actualDate) {
+        const card = new Card({
+            title: title,
+            actualDate: actualDate});
         card.products.push(new CardProduct());
         return card.save();
     }

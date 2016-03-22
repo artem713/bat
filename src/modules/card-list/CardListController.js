@@ -13,10 +13,7 @@ export default class CardListController {
     }
 
     add() {
-        this.cards.push({title: '', isNew: true});
-        //this.CardListService.addCard().then((response) => {
-        //    this.cards = response.data;
-        //});
+        this.cards.push({title: '', actualDate: new Date(), isNew: true});
     }
 }
 

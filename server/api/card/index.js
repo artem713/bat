@@ -13,7 +13,7 @@ router.route('')
     })
     .post((req, res) => {
         CardController
-            .add(req.body.title)
+            .add(req.body.title, req.body.actualDate)
             .then(data => res.send(data))
     });
 

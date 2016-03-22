@@ -2,6 +2,10 @@
   margin: 10px;
 }
 
+@mixin itemMarginTop {
+  margin-top: 10px;
+}
+
 @mixin bottomBorder {
   border-bottom: 1px dashed gray;
 }
@@ -33,11 +37,11 @@
 .card-wrap {
   background-color: rgb(250, 250, 250);
   padding: 10px;
-  margin: 10px;
   font-family: 'Roboto', 'Droid Sans', arial, sans-serif;
   font-size: 15px;
   float: left;
   min-width: 300px;
+  @include itemMargin;
 }
 
 .card-header {
@@ -53,11 +57,17 @@
       @include disableOutline;
     }
   }
+
+  .actual-date {
+    @include itemMarginTop;
+    @include disableBackground;
+    @include disableBorder;
+  }
 }
 
 .card-products {
 
-  margin-top: 10px;
+  @include itemMarginTop;
   display: inline-block;
   width: 100%;
 
@@ -110,7 +120,7 @@
   }
 }
 .card-total {
-  margin-top: 15px;
+  @include itemMarginTop;
   text-align: end;
   padding: 5px;
   font-style: italic;

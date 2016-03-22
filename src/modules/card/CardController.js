@@ -12,10 +12,7 @@ export default class CardController {
     }
 
     initialize() {
-        this.card = this.card || {
-                products: [{}]
-            };
-        this.title = this.getTitle();
+        this.card.actualDate = Date.parse(this.card.actualDate);
     }
 
     getItemsCount() {
@@ -44,8 +41,10 @@ export default class CardController {
 
     saveCard($event) {
         if ($event.which === KEY_EVENTS[ENTER_KEY_PRESSED]) {
+            const currentDate = new Date();
             return this.$http.post(`/card`, {
-                title: this.card.title || new Date()
+                title: this.card.title || `Unknown shop at ${currentDate}`,
+                actualDate: this.card.actualDate || currentDate
             }).then(response => {
                 this.card = response.data;
             });
