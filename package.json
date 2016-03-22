@@ -5,8 +5,8 @@
   "main": "calc.js",
   "scripts": {
     "prebuild": "npm i",
-    "start": "npm-run-all -s prebuild -p client server",
-    "client": "webpack-dev-server --progress --colors",
+    "start": "npm-run-all -s -p client server",
+    "client": "webpack --watch --progress --colors",
     "server": "node --harmony_destructuring server/server.js"
   },
   "keywords": [
