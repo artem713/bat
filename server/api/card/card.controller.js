@@ -41,14 +41,26 @@ module.exports = function CardController() {
     function add(title, actualDate) {
         const card = new Card({
             title: title,
-            actualDate: actualDate});
+            actualDate: actualDate
+        });
         card.products.push(new CardProduct());
         return card.save();
+    }
+
+    function update(data) {
+        return getById(data.id, true)
+            .then(card => {
+                card.title = data.title || card.title;
+                card.actualDate = data.actualDate || card.actualDate;
+                return card;
+            })
+            .then(card => card.save());
     }
 
     return {
         get: get,
         getById: getById,
-        add: add
+        add: add,
+        update: update
     };
 };

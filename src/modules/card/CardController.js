@@ -12,7 +12,7 @@ export default class CardController {
     }
 
     initialize() {
-        this.card.actualDate = Date.parse(this.card.actualDate);
+        this.card.actualDate = new Date(this.card.actualDate);
     }
 
     getItemsCount() {
@@ -49,6 +49,17 @@ export default class CardController {
                 this.card = response.data;
             });
         }
+    }
+
+    updateCardInfo() {
+        let promise = this.$http.put(`/card/${this.card._id}`, {
+            title: this.card.title,
+            actualDate: this.card.actualDate
+        }).then(response => {
+            this.card = response.data;
+            this.initialize();
+        });
+        return promise;
     }
 
     addProduct(index) {

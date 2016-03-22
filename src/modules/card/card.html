@@ -6,7 +6,10 @@
                class="title"
                ng-model="cardCtrl.card.title"
                ng-keypress="cardCtrl.saveCard($event, $index)"/>
-        <input type="date" class="actual-date" ng-model="cardCtrl.card.actualDate"/>
+        <input type="date"
+               class="actual-date"
+               ng-model="cardCtrl.card.actualDate"
+               ng-change="cardCtrl.updateCardInfo()"/>
     </div>
     <div class="card-products">
         <div class="card-products__header" ng-if="cardCtrl.card.products.length">
