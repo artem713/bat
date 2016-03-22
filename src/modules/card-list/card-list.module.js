@@ -1,3 +1,5 @@
+require("!style!css!sass!./styles.scss");
+
 import angular from 'angular';
 import card from '../card/card.module'
 

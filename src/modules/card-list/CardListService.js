@@ -29,4 +29,32 @@ export default class CardListService {
             diff = d.getDate() + 7 - day;
         return new Date(d.setDate(diff));
     }
+
+    getDayOfTheWeek() {
+        const currentDay = this.getStartOfTheWeek();
+        const endOfTheWeek = this.getEndOfTheWeek();
+
+        return {
+            [Symbol.iterator]() {
+
+                let value = currentDay.getDate();
+
+                return {
+                    next() {
+
+                        if (value <= endOfTheWeek.getDate()) {
+
+                            return {
+                                value: new Date(currentDay.setDate(value++)),
+                                done: false
+                            };
+                        }
+                        return {
+                            done: true
+                        };
+                    }
+                }
+            }
+        }
+    }
 }

@@ -1,0 +1,15 @@
+.card-list-wrap {
+  width: auto;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.day-of-the-week {
+  display: inline-block;
+  vertical-align: top;
+
+  &__label {
+    margin-left: 15px;
+  }
+}

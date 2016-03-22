@@ -1,7 +1,10 @@
 <div class="card-list-wrap">
-    <card class="card-list-item"
-          ng-repeat="card in cardListCtrl.cards track by $index"
-          card=card>
-    </card>
+    <div class="day-of-the-week" ng-repeat="dayOfTheWeek in cardListCtrl.daysOfTheWeek track by $index">
+        <span class="day-of-the-week__label" ng-if="cardListCtrl.hasCards(dayOfTheWeek)">{{dayOfTheWeek | date:'EEEE, dd MMMM'}}</span>
+        <card class="card-list-item"
+              ng-repeat="card in cardListCtrl.getCards(dayOfTheWeek) track by $index"
+              card=card>
+        </card>
+    </div>
     <button ng-click="cardListCtrl.add()">ADD CARD</button>
 </div>

@@ -39,8 +39,7 @@
   padding: 10px;
   font-family: 'Roboto', 'Droid Sans', arial, sans-serif;
   font-size: 15px;
-  float: left;
-  min-width: 300px;
+  width: 275px;
   @include itemMargin;
 }
 
@@ -62,6 +61,7 @@
     @include itemMarginTop;
     @include disableBackground;
     @include disableBorder;
+    display: block;
   }
 }
 
