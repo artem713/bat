@@ -49,12 +49,10 @@ function modifyCardProduct(data) {
 }
 
 function addNewCardProduct(position) {
-    return new CardProduct().save()
-        .then(data => {
-            newCardProduct = data;
-            card.products.splice(position + 1, 0, newCardProduct);
-        })
-        .then(() => card.save());
+    card.products.splice(position + 1, 0, new CardProduct());
+    return card.save().then(card => {
+        newCardProduct = card.products[position + 1];
+    });
 }
 
 function populateCard(id) {
