@@ -4,9 +4,10 @@
   "description": "BAT is budget analysis tool",
   "main": "calc.js",
   "scripts": {
-    "poststart": "webpack --watch",
-    "start": "node server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prebuild": "npm i",
+    "start": "npm-run-all -s prebuild -p client server",
+    "client": "webpack-dev-server --progress --colors",
+    "server": "node --harmony_destructuring server/server.js"
   },
   "keywords": [
     "budget",
@@ -36,6 +37,8 @@
     "connect": "^3.4.1",
     "dotenv": "^2.0.0",
     "express": "^4.13.4",
-    "mongoose": "^4.4.7"
+    "mongoose": "^4.4.7",
+    "ng-focus-if": "^1.0.5",
+    "npm-run-all": "^1.6.0"
   }
 }
