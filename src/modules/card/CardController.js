@@ -92,6 +92,15 @@ export default class CardController {
             }
         });
     }
+
+    deleteCardProduct(cardProductId) {
+        return this.$http.post(`/card/${this.card._id}/deleteProduct`, {
+            cardProductId: cardProductId
+        }).then(response => {
+            this.card.products = response.data.products;
+            return response;
+        });
+    }
 }
 
 CardController.$inject = ['$timeout', '$window', '$http'];

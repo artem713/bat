@@ -1,3 +1,5 @@
+$primary-height: 24px;
+
 @mixin itemMargin {
   margin: 10px;
 }
@@ -20,7 +22,7 @@
   box-sizing: border-box;
   border-top: transparent;
   border-left: transparent;
-  border-right: 1px dashed gray;
+  border-right: 1px dashed transparent;
   @include bottomBorder;
   @include disableBackground;
 }
@@ -45,6 +47,7 @@
 
 .card-header {
   font-weight: bold;
+  padding-left: 15px;
 
   .title {
     @include disableBorder;
@@ -62,6 +65,7 @@
     @include disableBackground;
     @include disableBorder;
     display: block;
+    color: gray;
   }
 }
 
@@ -73,7 +77,7 @@
 
   .title {
     @include cardProductItem;
-    width: 75%;
+    width: 65%;
     &:focus {
       @include disableOutline;
     }
@@ -97,28 +101,70 @@
     }
   }
 
+  .delete-card-product-wrap {
+    width: 10%;
+    float: left;
+    opacity: 0;
+  }
+
+  .delete-card-product {
+    background: url("../../resources/ico/delete-icon.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 18px 18px;
+    border: 1px solid transparent;
+    outline: none;
+    height: $primary-height;
+    opacity: .54;
+    width: 24px;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
+
   &__header {
-    font-style: italic;
-    color: grey;
-    margin-bottom: 5px;
-    display: inline-block;
+    height: $primary-height;
     width: 100%;
+    font-style: italic;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 5px;
+    color: grey;
 
     .title {
       width: 60%;
       @include disableBorder;
+      position: absolute;
+      left: 24px;
     }
 
     .quantaty {
       width: 25%;
       @include disableBorder;
+      position: absolute;
+      right: 40px;
     }
 
     .price {
       @include disableBorder;
+      position: absolute;
+      right: 0;
+    }
+  }
+
+  &__item {
+    height: $primary-height;
+
+    &:hover {
+      .delete-card-product-wrap {
+        opacity: 1;
+      }
     }
   }
 }
+
 .card-total {
   @include itemMarginTop;
   text-align: end;

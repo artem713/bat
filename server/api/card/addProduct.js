@@ -9,7 +9,8 @@ let card = {},
     newCardProduct;
 
 module.exports = require('express').Router()
-    .post('/:cardId/addProduct', addProduct);
+    .post('/:cardId/addProduct', addProduct)
+    .post('/:cardId/deleteProduct', deleteProduct);
 
 function addProduct(req, res) {
 
@@ -20,7 +21,7 @@ function addProduct(req, res) {
         .then(() => modifyCardProduct(receivedCardProduct))
         .then(() => addNewCardProduct(position))
         .then(() => populateCard(req.params.cardId))
-        .then(() => sendCardProducts(res, card.products));
+        .then(() => sendCardProducts(res, {products: card.products, newProductId: newCardProduct._id}));
 }
 
 function modifyCardProduct(data) {
@@ -65,9 +66,21 @@ function setCard(data) {
     card = data;
 }
 
-function sendCardProducts(response, products) {
-    response.send({
-        products: products,
-        newProductId: newCardProduct._id
-    });
+function sendCardProducts(response, data) {
+    response.send(data);
+}
+
+function deleteProduct(req, res) {
+    const {cardProductId} = req.body;
+
+    CardController.getById(req.params.cardId)
+        .then(card => setCard(card))
+        .then(() => deleteCardProduct(cardProductId))
+        .then(() => populateCard(req.params.cardId))
+        .then(() => sendCardProducts(res, {products: card.products}));
+}
+
+function deleteCardProduct(id) {
+    card.products.id(id).remove();
+    return card.save();
 }

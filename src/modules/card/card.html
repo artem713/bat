@@ -17,7 +17,10 @@
             <div class="quantaty">Quantaty</div>
             <div class="price">Price</div>
         </div>
-        <div ng-repeat="item in cardCtrl.card.products">
+        <div ng-repeat="item in cardCtrl.card.products" class="card-products__item">
+            <div class="delete-card-product-wrap">
+                <button class="delete-card-product" ng-click="cardCtrl.deleteCardProduct(item._id)"></button>
+            </div>
             <input id="{{'card-product-' + item._id}}"
                    ng-keypress="cardCtrl.onKeyPress($event, $index)"
                    type="text"
