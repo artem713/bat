@@ -16,7 +16,7 @@ const Card = require('./card'),
 module.exports = function CardController() {
 
     function get(params) {
-        return Card.find(params || {})
+        return Card.find(params ? {actualDate: {$gt: params.startDate, $lt: params.endDate}} : {})
             .populate(populationConfig)
             .exec((err, data) => {
                 if (err) {

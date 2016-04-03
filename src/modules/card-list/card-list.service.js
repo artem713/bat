@@ -5,7 +5,7 @@ export default class CardListService {
     }
 
     getCards(startDate = this.getStartOfTheWeek(), endDate = this.getEndOfTheWeek()) {
-        return this.$http.get('/card')
+        return this.$http.get('/card', { params: {startDate, endDate}})
             .then(response => response.data)
             .catch(error => console.log(error));
     }
@@ -18,15 +18,15 @@ export default class CardListService {
 
     getStartOfTheWeek() {
         const d = new Date(),
-            day = d.getDay(),
-            diff = d.getDate() - day + 1;
+            day = d.getDay() === 0 ? 6 : d.getDay() + 1,
+            diff = d.getDate() - day;
         return new Date(d.setDate(diff)); //todo: cover leap year
     }
 
     getEndOfTheWeek() {
         const d = new Date(),
-            day = d.getDay(),
-            diff = d.getDate() + 7 - day;
+            day = d.getDay() === 0 ? 6 : d.getDay() + 1,
+            diff = d.getDate() + 6 - day;
         return new Date(d.setDate(diff));
     }
 

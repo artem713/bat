@@ -7,7 +7,7 @@ const express = require('express'),
 router.route('')
     .get((req, res) => {
         CardController
-            .get()
+            .get(req.query)
             .then(data => res.send(data))
             .catch(err => console.error(err.message));
     })

@@ -1,0 +1,7 @@
+<div class="week">
+    <div class="days" ng-repeat="dayOfTheWeek in [1, 2, 3, 4, 5, 6, 0]">
+        <card ng-repeat="card in weekController.getCards(dayOfTheWeek) track by $index"
+              card=card>
+        </card>
+    </div>
+</div>

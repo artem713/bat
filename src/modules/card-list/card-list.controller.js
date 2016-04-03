@@ -1,20 +1,64 @@
 import CardListService from './card-list.service';
+const weekNumber = require('current-week-number');
 
 export default class CardListController {
     constructor($http) {
         this.CardListService = new CardListService($http);
-        this.days = this.getDays();
-        this.loadCards();
+        this.loadCards().then(() => this.initialize());
+    }
+
+    initialize() {
+        return this.prepareCardsByWeek();
+    }
+
+    prepareCardsByWeek() {
+        const weeks = new Map();
+
+        this.cards.forEach(card => {
+            let cardWeekNumber = weekNumber(card.actualDate),
+                weeksItem = weeks.get(cardWeekNumber);
+
+            if(weeksItem) {
+                weeksItem.push(card);
+            } else {
+                weeksItem = [card];
+            }
+
+            weeks.set(cardWeekNumber, weeksItem);
+        });
+
+        console.log(weeks.keys());
+        console.log(new Map([...weeks.entries()].sort()));
+
+        this.cardsByWeek = new Map([...weeks.entries()].sort());
+        console.log(this.cardsByWeek);
+    }
+
+    getWeeks() {
+        return this.cardsByWeek ? Array.from(this.cardsByWeek.keys()) : [];
+    }
+
+    getCardsByWeek(number) {
+        return this.cardsByWeek.get(number);
     }
 
     loadCards() {
-        this.CardListService
-            .getCards()
-            .then(cards => this.cards = cards)
+        var today = new Date();
+        today.setDate(today.getDate() - 14); // todo: manually loading cards for 2 weeks - remove after implementing
+        return this.CardListService
+            .getCards(today)
+            .then(cards => {
+                this.cards = cards
+            });
+    }
+
+    getCardListIsEmpty() {
+        return this.cards && this.cards.length === 0;
     }
 
     add() {
         this.cards.push({title: '', actualDate: new Date(), isNew: true});
+        this.prepareCardsByWeek();
     }
 
     getDays() {
