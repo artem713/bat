@@ -7,7 +7,6 @@
         </span>
         <card ng-repeat="card in cardListCtrl.getCards(dayOfTheWeek) track by $index"
               card=card>
-
         </card>
     </div>
     <button ng-click="cardListCtrl.add()">ADD CARD</button>

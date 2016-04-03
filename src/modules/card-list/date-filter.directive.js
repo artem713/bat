@@ -1,8 +1,8 @@
-import DateFilterController from './DateFilterController';
+import DateFilterController from './date-filter.controller';
 
 export default function dateFilter() {
     return {
-        template: require('./date-filter.html'),
+        template: require('./date-filter.template.html'),
         restrict: 'E',
         replace: true,
         scope: {},

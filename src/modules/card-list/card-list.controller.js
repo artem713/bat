@@ -1,4 +1,4 @@
-import CardListService from './CardListService';
+import CardListService from './card-list.service';
 
 export default class CardListController {
     constructor($http) {

@@ -1,4 +1,4 @@
-import DateFilterService from './DateFilterService';
+import DateFilterService from './date-filter.service';
 
 export default class DateFilterController {
     constructor() {

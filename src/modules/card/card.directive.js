@@ -1,8 +1,8 @@
-import CardController from './CardController';
+import CardController from './card.controller';
 
 export default function card() {
     return {
-        template: require('./card.html'),
+        template: require('./card.template.html'),
         restrict: 'E',
         replace: true,
         scope: {
