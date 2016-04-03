@@ -1,13 +1,13 @@
-<div class="card-wrap">
+<div class="card">
     <div class="card-header">
         <input type="text"
+               class="card-header__title"
                placeholder="Enter shop name..."
                focus-if="cardCtrl.card.isNew"
-               class="title"
                ng-model="cardCtrl.card.title"
                ng-keypress="cardCtrl.saveCard($event, $index)"/>
         <input type="date"
-               class="actual-date"
+               class="card-header__actual-date"
                ng-model="cardCtrl.card.actualDate"
                ng-change="cardCtrl._deferedUpdatingCardInfo()"/>
     </div>
@@ -17,7 +17,7 @@
             <div class="quantaty">Quantaty</div>
             <div class="price">Price</div>
         </div>
-        <div ng-repeat="item in cardCtrl.card.products" class="card-products__item">
+        <div class="card-products__item" ng-repeat="item in cardCtrl.card.products">
             <div class="delete-card-product-wrap">
                 <button class="delete-card-product" ng-click="cardCtrl.deleteCardProduct(item._id)"></button>
             </div>
@@ -31,6 +31,7 @@
         </div>
     </div>
     <div class="card-footer">
+        <div></div>
         <div class="card-total" ng-if="cardCtrl.card.products.length">
             <span class="card-total__title">Total</span>
             <span class="card-total__value">{{cardCtrl.getTotalPrice()}}</span>

@@ -3,22 +3,22 @@ import CardListService from './CardListService';
 export default class CardListController {
     constructor($http) {
         this.CardListService = new CardListService($http);
+        this.days = this.getDays();
         this.loadCards();
-        this.daysOfTheWeek = this.getDaysOfTheWeek();
     }
 
     loadCards() {
-        this.CardListService.getCards().then((response) => {
-            this.cards = response.data;
-        });
+        this.CardListService
+            .getCards()
+            .then(cards => this.cards = cards)
     }
 
     add() {
         this.cards.push({title: '', actualDate: new Date(), isNew: true});
     }
 
-    getDaysOfTheWeek() {
-        return Array.from(this.CardListService.getDayOfTheWeek());
+    getDays() {
+        return Array.from(this.CardListService.getDays());
     }
 
     getCards(dayOfTheWeek) {

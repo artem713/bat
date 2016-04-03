@@ -36,7 +36,7 @@ $primary-height: 24px;
   border: none;
 }
 
-.card-wrap {
+.card {
   background-color: rgb(250, 250, 250);
   padding: 10px;
   font-family: 'Roboto', 'Droid Sans', arial, sans-serif;
@@ -49,7 +49,7 @@ $primary-height: 24px;
   font-weight: bold;
   padding-left: 15px;
 
-  .title {
+  &__title {
     @include disableBorder;
     @include bottomBorder;
     @include disableBackground;
@@ -60,7 +60,7 @@ $primary-height: 24px;
     }
   }
 
-  .actual-date {
+  &__actual-date {
     @include itemMarginTop;
     @include disableBackground;
     @include disableBorder;

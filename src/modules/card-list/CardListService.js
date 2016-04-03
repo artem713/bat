@@ -5,9 +5,9 @@ export default class CardListService {
     }
 
     getCards(startDate = this.getStartOfTheWeek(), endDate = this.getEndOfTheWeek()) {
-        return this.$http.get('/card').catch((error) => {
-            console.log(error);
-        });
+        return this.$http.get('/card')
+            .then(response => response.data)
+            .catch(error => console.log(error));
     }
 
     addCard() {
@@ -30,7 +30,7 @@ export default class CardListService {
         return new Date(d.setDate(diff));
     }
 
-    getDayOfTheWeek() {
+    getDays() {
         const currentDay = this.getStartOfTheWeek();
         const endOfTheWeek = this.getEndOfTheWeek();
 
